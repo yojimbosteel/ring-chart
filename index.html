@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Angular Directive Testing</title>
+
+    <!--
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    -->
+
+    <link rel="stylesheet" type="text/css" href="app.css"
+  </head>
+
+  <body ng-app="App">
+    <div class="main-container" ng-controller="AppController">
+      <p>{{viewData}}</p>
+
+      <tc-ring-widget>
+        <tc-ring name-key="bio-view" ring-data="
+          {program:
+            {
+              bio:
+                [
+                  {
+                    name: 'billable',
+                    value: 100
+                  },
+                  {
+                    name: 'non-billable',
+                    value: 50
+                  }
+                ],
+              cr:
+                [
+                  {
+                    name: 'billable',
+                    value: 100
+                  },
+                  {
+                    name: 'non-billable',
+                    value: 50
+                  }
+                ],
+              plan:
+                [
+                  {
+                    name: 'billable',
+                    value: 100
+                  },
+                  {
+                    name: 'non-billable',
+                    value: 50
+                  }
+                ]
+            }
+          }
+        "></tc-ring>
+        <tc-ring name-key="cultural-view" ring-data="{{ringData2}}"></tc-ring>
+        <input type="text" ng-model="user.key" />
+        <tc-ring name-key="{{user.key}}" ring-data="{{ringData3}}"></tc-ring>
+      </tc-ring-widget>
+
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Application Files -->
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <script src="AppController.js" type="text/javascript" charset="utf-8"></script>
+    <script src="RingWidgetModule.js" type="text/javascript" charset="utf-8"></script>
+    <script src="tcRingWidgetDirective.js" type="text/javascript" charset="utf-8"></script>
+    <script src="tcRingWidgetController.js" type="text/javascript" charset="utf-8"></script>
+    <script src="tcRingDirective.js" type="text/javascript" charset="utf-8"></script>
+  </body>
+</html>
