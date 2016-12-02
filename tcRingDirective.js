@@ -104,12 +104,9 @@
           // .select("path")
         var rings = d3.select(element[0])
           .select("g.rings");
-        var bBox = rings.node().getBBox();
-        var x = bBox.x + bBox.width/2;
-        var y = bBox.y + bBox.height/2;
         rings.transition().duration(1000)
           // .attr("d", arc);
-          .attr("transform", "rotate(90 " + x + " " + y + " )");
+          .attr("transform", "rotate(90 100 100)");
       }
 
       //Easy colors accessible via a 10-step ordinal scale
