@@ -12,7 +12,8 @@
       templateUrl: "tcRing.html",
       scope: {
         nameKey: "@",
-        ringData: "@"
+        ringData: "@",
+        title: "@"
       },
       link: linkFunction
     };
@@ -24,7 +25,7 @@
         height: 200
       };
 
-      scope.title = "Generic Title";
+      scope.title = scope.title || "Some title from data-set.";
 
       // Add ring to ring list on RingWidgetController
       tcRingWidgetController.addRing(scope);
@@ -45,7 +46,7 @@
       var w = defaults.width;
       var h = defaults.height;
 
-      var dataset = [270, 10, 30, 50]; //TODO: Replace with data factory that generates JSON objects.
+      var dataset = [50, 20]; //TODO: Replace with data factory that generates JSON objects.
 
       // Get sum and calc percent.
       function getSum(total, num){
@@ -95,14 +96,22 @@
         selectedElement.attr("fill", "green");
         scope.title = "New";
         scope.$apply();
+      }
+
+      function doubleClickArc(datum){
         var rings = d3.select(element[0])
           .select("g.rings");
+        svg.selectAll("g.arc")
+          .classed("selected", false);
+        d3.select(this)
+          .classed("selected", true);
         rings.transition().duration(1000)
           .attrTween("transform", tween);
 
         function tween(){
           var rotateAngle = calcCenterRotation(datum)*180/Math.PI;
-          return d3.interpolateString(this.getAttribute("transform"), "rotate(" + rotateAngle +  ", 100, 100)");
+          var interpolateFrom = this.getAttribute("transform") || "rotate(0, 100, 100)";
+          return d3.interpolateString(interpolateFrom, "rotate(" + rotateAngle +  ", 100, 100)");
         }
       }
 
@@ -123,23 +132,38 @@
               .enter()
               .append("g")
               .attr("class", "arc")
-              .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+              .classed("selected", function(d, i) {if(i==0){return true;}})
+              .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")")
+              .on("click", clickArc)
+              .on("dblclick", doubleClickArc)
+              .on("mouseover", percentOnHover)
+              .on("mouseout", setInitialCenterText);
 
+      //Add initial center percent text
+      function setInitialCenterText(){
+        svg.select("text.center")
+          .remove();
+        var data = d3.select("g.arc.selected").datum();
+        svg.append("text")
+          .attr("class", "center")
+          .attr("x", outerRadius)
+          .attr("y", outerRadius)
+          .attr("dy", "0.3em")
+          .text(Math.round(data.value*toPercent) + "%");
+      }
+
+      setInitialCenterText();
 
       //percent
       function percentOnHover(d){
-        var xPosition = outerRadius;
-        var yPosition = outerRadius;
+        svg.select("text.center")
+          .remove();
         svg.append("text")
-          .attr("id", "percent-on-hover")
-          .attr("x", xPosition)
-          .attr("y", yPosition)
+          .attr("class", "center")
+          .attr("x", outerRadius)
+          .attr("y", outerRadius)
           .attr("dy", "0.3em")
           .text(Math.round(d.value*toPercent) + "%");
-      }
-      function removePercentOnMouseout(d){
-        svg.select("#percent-on-hover")
-          .remove();
       }
 
       //Draw arc paths
@@ -147,10 +171,8 @@
           .attr("fill", function(d, i) {
             return color(i);
           })
-          .attr("d", arc)
-          .on("click", clickArc)
-          .on("mouseover", percentOnHover)
-          .on("mouseout", removePercentOnMouseout);
+          .attr("d", arc);
+
 
       //Labels
       arcs.append("text")

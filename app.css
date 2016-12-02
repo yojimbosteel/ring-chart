@@ -23,7 +23,7 @@ tc-ring svg text {
   fill: white;
 }
 
-tc-ring svg text#percent-on-hover {
+tc-ring svg text.center {
   font-family: sans-serif;
   font-size: 60px;
   fill: white;
@@ -38,4 +38,16 @@ tc-ring svg text#percent-on-hover {
   display: inline-block;
   width: 200px;
   height: 200px;
+}
+
+tc-ring svg g.arc {
+  opacity: 0;
+}
+
+tc-ring svg g.arc.selected {
+  opacity: 1;
+}
+
+tc-ring svg g.arc:hover {
+  opacity: 1;
 }
