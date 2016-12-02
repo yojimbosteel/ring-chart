@@ -106,7 +106,11 @@
           .select("g.rings");
         rings.transition().duration(1000)
           // .attr("d", arc);
-          .attr("transform", "rotate(90 100 100)");
+          .attrTween("transform", tween);
+      }
+
+      function tween(d, i, a){
+        return d3.interpolateString("rotate(0, 100, 100)", "rotate(90, 100, 100)");
       }
 
       //Easy colors accessible via a 10-step ordinal scale
