@@ -26,8 +26,6 @@
 
       scope.title = "Generic Title";
 
-      console.log(scope.ringData);
-
       // Add ring to ring list on RingWidgetController
       tcRingWidgetController.addRing(scope);
 
@@ -92,26 +90,22 @@
       // Go through and rotate all arcs.
       rotateArcs(arcDataset, rotateAngle);
 
-      function clickArc(){
+      function clickArc(datum){
         var selectedElement = d3.select(this);
-        // var selectedElementDatum = selectedElement.datum();
-        // var rotateBy = calcCenterRotation(selectedElementDatum);
         selectedElement.attr("fill", "green");
         scope.title = "New";
         scope.$apply();
-        // rotateArcs(arcDataset, rotateBy);
-        // arcs.data(arcDataset)
-          // .select("path")
         var rings = d3.select(element[0])
           .select("g.rings");
         rings.transition().duration(1000)
-          // .attr("d", arc);
           .attrTween("transform", tween);
+
+        function tween(){
+          var rotateAngle = calcCenterRotation(datum)*180/Math.PI;
+          return d3.interpolateString(this.getAttribute("transform"), "rotate(" + rotateAngle +  ", 100, 100)");
+        }
       }
 
-      function tween(d, i, a){
-        return d3.interpolateString("rotate(0, 100, 100)", "rotate(90, 100, 100)");
-      }
 
       //Easy colors accessible via a 10-step ordinal scale
       var color = d3.scaleOrdinal(d3.schemeCategory10);
