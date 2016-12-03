@@ -93,7 +93,6 @@
 
       function clickArc(datum){
         var selectedElement = d3.select(this);
-        selectedElement.attr("fill", "green");
         scope.title = "New";
         scope.$apply();
       }
@@ -143,7 +142,7 @@
       function setInitialCenterText(){
         svg.select("text.center")
           .remove();
-        var data = d3.select("g.arc.selected").datum();
+        var data = svg.select("g.arc.selected").datum();
         svg.append("text")
           .attr("class", "center")
           .attr("x", outerRadius)

@@ -41,7 +41,7 @@ tc-ring svg text.center {
 }
 
 tc-ring svg g.arc {
-  opacity: 0;
+  opacity: 0.2;
 }
 
 tc-ring svg g.arc.selected {
