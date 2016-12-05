@@ -46,7 +46,7 @@
       var w = defaults.width;
       var h = defaults.height;
 
-      var dataset = [50, 20]; //TODO: Replace with data factory that generates JSON objects.
+      var dataset = [50, 5]; //TODO: Replace with data factory that generates JSON objects.
 
       // Get sum and calc percent.
       function getSum(total, num){
@@ -148,7 +148,22 @@
           .attr("x", outerRadius)
           .attr("y", outerRadius)
           .attr("dy", "0.3em")
-          .text(Math.round(data.value*toPercent) + "%");
+          .text(Math.round(data.value*toPercent) + "%")
+          .on("click", function(){
+            svg.selectAll("g.arc")
+              .transition()
+              .attr("transform", zoomArc);
+          });
+      }
+
+      function zoomArc(d){
+        var scaleFactor = outerRadius/(outerRadius*Math.sin((d.endAngle - d.startAngle)/2));
+        console.log(scaleFactor);
+        console.log(d);
+        var shift = outerRadius*scaleFactor + (outerRadius - innerRadius)*scaleFactor/2;
+        console.log((outerRadius - innerRadius)*scaleFactor);
+        return "translate(" + shift + "," + outerRadius + ") " +
+               "scale(" + scaleFactor + "," + scaleFactor + ")";
       }
 
       setInitialCenterText();

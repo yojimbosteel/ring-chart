@@ -15,51 +15,52 @@
   <body ng-app="App">
     <div class="main-container" ng-controller="AppController">
       <p>{{viewData}}</p>
-
-      <tc-ring-widget>
-        <tc-ring name-key="bio-view" ring-data="
-          {program:
-            {
-              bio:
-                [
-                  {
-                    name: 'billable',
-                    value: 100
-                  },
-                  {
-                    name: 'non-billable',
-                    value: 50
-                  }
-                ],
-              cr:
-                [
-                  {
-                    name: 'billable',
-                    value: 100
-                  },
-                  {
-                    name: 'non-billable',
-                    value: 50
-                  }
-                ],
-              plan:
-                [
-                  {
-                    name: 'billable',
-                    value: 100
-                  },
-                  {
-                    name: 'non-billable',
-                    value: 50
-                  }
-                ]
+      <div ng-repeat="i in [1,2,3]">
+        <tc-ring-widget>
+          <tc-ring name-key="bio-view" ring-data="
+            {program:
+              {
+                bio:
+                  [
+                    {
+                      name: 'billable',
+                      value: 100
+                    },
+                    {
+                      name: 'non-billable',
+                      value: 50
+                    }
+                  ],
+                cr:
+                  [
+                    {
+                      name: 'billable',
+                      value: 100
+                    },
+                    {
+                      name: 'non-billable',
+                      value: 50
+                    }
+                  ],
+                plan:
+                  [
+                    {
+                      name: 'billable',
+                      value: 100
+                    },
+                    {
+                      name: 'non-billable',
+                      value: 50
+                    }
+                  ]
+              }
             }
-          }
-        "></tc-ring>
-        <tc-ring name-key="cultural-view" title="Cultural" ring-data="{{ringData2}}"></tc-ring>
-        <input type="text" ng-model="user.key" />
-        <tc-ring name-key="{{user.key}}" ring-data="{{ringData3}}"></tc-ring>
-      </tc-ring-widget>
+          "></tc-ring>
+          <tc-ring name-key="cultural-view" title="Cultural" ring-data="{{ringData2}}"></tc-ring>
+          <input type="text" ng-model="user.key" />
+          <tc-ring name-key="{{user.key}}" ring-data="{{ringData3}}"></tc-ring>
+        </tc-ring-widget>
+      </div>
 
     </div>
 
